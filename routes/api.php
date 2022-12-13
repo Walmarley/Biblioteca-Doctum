@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\LogarController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/livros', [BookController::class, 'index']);
 Route::post('/cadastrarLivro', [BookController::class, 'store']);
-Route::post('/atualizarLivro/{id}', [BookController::class, 'update']);
+Route::put('/atualizarLivro/{id}', [BookController::class, 'update']);
 Route::get('/livro/{id}', [BookController::class, 'show']);
 Route::delete('/excluir/{id}', [BookController::class, 'destroy']);
+
+Route::post('/criarUser', [UserController::class, 'store']);
+Route::get('/users', [UserController::class, 'index']);
+
+Route::post('/logar', [LogarController::class, 'Authenticate']);
