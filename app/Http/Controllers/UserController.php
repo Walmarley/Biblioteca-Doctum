@@ -42,13 +42,32 @@ class UserController extends Controller
         
         $data ['password'] = bcrypt($data['password']);
         User::create($data);
-        // return view('book.index');
-        return response()->json(['message'=> 'Usuario  '. $request->nome.' adicionado com sucesso']);
+        return view('book.index');
+        // return response()->json(['message'=> 'Usuario  '. $request->nome.' adicionado com sucesso']);
+    }
+
+    public function Authenticate(Request $request)
+    {
+        $login = $request->only('email', 'password');
+        Auth::attempt($login);
+
+        // Auth::attempt(['email' => $request->email, 'password' => $request->password]); // testando formas diferentes
+
+        $user = Auth::user($login);
+
+        return view('login.index');
+
+        return response()->json(['Messege' => 'Usuario ' .$user->name. ' logado com sucesso']);
     }
 
     public function show($id)
     {
-        //
+    }
+
+    public function teste() 
+    {
+        return view('book.index');
+
     }
 
     public function update(Request $request, $id)

@@ -14,8 +14,7 @@ class BookController extends Controller
         $books = Book::all();
         $mensagemSucesso = session('mensagem.sucesso');
 
-        // return view('book.index')->with('books', $books)
-        //     ->with('mensagemSucesso', $mensagemSucesso);
+        return view('book.index')->with('books', $books);
 
         return response()->json([$books, 'Message' => $mensagemSucesso]);
     }
@@ -56,9 +55,11 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $livro = Book::find($id);
+        $book = Book::find($id);
 
-        return response()->json(['data' => $livro]);
+        return view('book.show')->with('book', $book);
+
+        return response()->json(['data' => $book]);
     }
 
     
@@ -83,8 +84,13 @@ class BookController extends Controller
 
     public function destroy($id)
     {
-        $livro = Book::find($id);
+        $book = Book::find($id);
         Book::find($id)->delete();
-        return response()->json(['O livro ' . $livro->book_name . ' foi excluido com sucesso']);
+
+        return redirect(route('book.index')); //se quiser so apagar
+
+        return view('book.destroy')->with('book', $book); //se quiser uma pagina personalizada para ver apagando
+        
+        return response()->json(['O livro ' . $book->book_name . ' foi excluido com sucesso']); // acessar via API
     }
 }

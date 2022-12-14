@@ -31,4 +31,4 @@ Route::delete('/excluir/{id}', [BookController::class, 'destroy']);
 Route::post('/criarUser', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
 
-Route::post('/logar', [LogarController::class, 'Authenticate']);
+Route::post('/logar', [UserController::class, 'Authenticate']);

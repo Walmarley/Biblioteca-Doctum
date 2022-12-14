@@ -1,10 +1,6 @@
 <?php
 
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\EpisodesController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SeasonsController;
-use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
@@ -24,16 +20,9 @@ Route::get('/', function () {
     return redirect('/series');
 })->middleware(Autenticador::class);
 
-Route::resource('/series', SeriesController::class)
-    ->except(['show']);
-
-
-Route::get('/login', [LoginController::class,'index'])->name('login');
-Route::post('/login', [LoginController::class,'store'])->name('signin');
-Route::get('/logout', [LoginController::class,'destroy'])->name('logout');
-
-Route::get('/registrer', [UsersController::class,'create'])->name('users.create');
-Route::post('/registrer', [UsersController::class,'store'])->name('users.create');
+// Route::post('/login', [UsersController::class,'Authenticate'])->name('');
 
 Route::get('/livros', [BookController::class, 'index'])->name('book.index');
-Route::get('/cadastrarlivros', [BookController::class, 'store'])->name('book.store');
+Route::get('/show/{id}', [BookController::class, 'show'])->name('book.show');
+Route::post('/cadastrarlivros', [BookController::class, 'store'])->name('book.addBook');
+Route::delete('/excluir/{id}', [BookController::class, 'destroy'])->name('book.destroy');
