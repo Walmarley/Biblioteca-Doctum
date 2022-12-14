@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Validator;
 class BookController extends Controller
 {
 
+    public function layout()
+    {
+        return view('book.layout');
+    }
+
     public function index()
     {
         $books = Book::all();
@@ -37,10 +42,10 @@ class BookController extends Controller
 
         if($validador->fails()){
             return response()->json(['message' => $validador->messages()]);
-            // return view('book.store')->with('mensagem', $validador->messages());
         }
 
         Book::create($data);
+        
 
         // Book::create([
         //     'book_name' => $request->book_name,

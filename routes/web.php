@@ -22,7 +22,9 @@ Route::get('/', function () {
 
 // Route::post('/login', [UsersController::class,'Authenticate'])->name('');
 
+Route::get('/layout', [BookController::class, 'layout'])->name('book.layout');
+Route::post('/layout', [BookController::class, 'store'])->name('book.store');
+
 Route::get('/livros', [BookController::class, 'index'])->name('book.index');
 Route::get('/show/{id}', [BookController::class, 'show'])->name('book.show');
-Route::post('/cadastrarlivros', [BookController::class, 'store'])->name('book.addBook');
 Route::delete('/excluir/{id}', [BookController::class, 'destroy'])->name('book.destroy');
