@@ -14,7 +14,7 @@
             <a class="navbar-brand" href="#">Home</a>
 
             @auth
-            <a href="{{route('logout')}}"> Sair </a>
+            {{-- <a href="{{route('logout')}}"> Sair </a> --}}
             @endauth
 
             @guest

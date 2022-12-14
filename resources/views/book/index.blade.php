@@ -1,4 +1,12 @@
 <x-layout title="Livros">
+
+    <button type="button" class="btn btn-outline-primary">
+        <a href="{{ route('book.layout') }}" class="btn btn-primary btn-sm">
+            Adicionar Novo Livro
+        </a>
+    </button>
+        
+
     @foreach ($books as $book)
     <li class="list-group-item d-flex justify-content-between align-items-center">
 

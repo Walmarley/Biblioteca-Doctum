@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +20,11 @@ Route::get('/', function () {
     return redirect('/series');
 })->middleware(Autenticador::class);
 
-// Route::post('/login', [UsersController::class,'Authenticate'])->name('');
+Route::get('/login', [UserController::class,'login'])->name('user.log');
+Route::post('/login', [UserController::class,'Authenticate'])->name('user.login');
+
+Route::get('/newuser', [UserController::class,'layout'])->name('user.layout');
+Route::post('/newuser', [UserController::class,'store'])->name('user.store');
 
 Route::get('/layout', [BookController::class, 'layout'])->name('book.layout');
 Route::post('/layout', [BookController::class, 'store'])->name('book.store');

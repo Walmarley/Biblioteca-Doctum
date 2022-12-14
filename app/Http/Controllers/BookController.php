@@ -54,7 +54,8 @@ class BookController extends Controller
         //     'summary' => $request->summary
         // ]); //vi num site o cara fazendo assim e quis testar
 
-        // return view('book.index');
+        return redirect(route('book.index'));
+        
         return response()->json(['message'=> 'O livro '. $request->book_name.' adicionado com sucesso']);
     }
 
