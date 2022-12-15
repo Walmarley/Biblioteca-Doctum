@@ -19,6 +19,7 @@
                 </button>
                 </a>
 
+                @auth
                 <form action="{{ route('book.destroy', $book->id) }}" method="post" class="ms-2">
                     @csrf
                     @method('DELETE')
@@ -26,6 +27,7 @@
                         X
                     </button>
                 </form>
+                @endauth
             </span>
         
     </li>

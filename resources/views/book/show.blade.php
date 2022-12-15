@@ -17,7 +17,7 @@
             <button class="btn btn-primary btn-sm">
                 Voltar
             </button>
-            </a>
+        </a>
       </div>
 
 </x-layout> 

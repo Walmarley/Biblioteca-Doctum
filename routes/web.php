@@ -23,6 +23,9 @@ Route::get('/', function () {
 Route::get('/login', [UserController::class,'login'])->name('user.log');
 Route::post('/login', [UserController::class,'Authenticate'])->name('user.login');
 
+Route::get('/logout', [UserController::class,'logout'])->name('logout');
+
+
 Route::get('/newuser', [UserController::class,'layout'])->name('user.layout');
 Route::post('/newuser', [UserController::class,'store'])->name('user.store');
 

@@ -26,6 +26,10 @@
             <button type="submit" class="btn btn-primary mt-2"> Cadastrar </button>
         </div>
 
+        <a href="{{ route('book.index') }}" class="btn btn-secondary mt-3">
+            Voltar
+        </a>
+
     </form>
 
 </x-layout>

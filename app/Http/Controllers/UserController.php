@@ -47,7 +47,7 @@ class UserController extends Controller
         $data ['password'] = bcrypt($data['password']);
         User::create($data);
 
-        return redirect(route('book.index'));
+        return redirect(route('user.log'));
 
         return response()->json(['message'=> 'Usuario  '. $request->nome.' adicionado com sucesso']);
     }
@@ -64,26 +64,21 @@ class UserController extends Controller
 
         // Auth::attempt(['email' => $request->email, 'password' => $request->password]); // testando formas diferentes
 
-        $user = Auth::user($login);
+       if (!$user = Auth::user($login)){
+            return redirect()->back()->withErrors(['Úsuario ou senha inválidos']);
+        }
         
         return redirect(route('book.index'));
 
         return response()->json(['Messege' => 'Usuario ' .$user->name. ' logado com sucesso']);
     }
 
-    public function show($id)
+    public function logout()
     {
-        //
+        Auth::logout();
+
+        return to_route('user.log');
     }
 
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }
