@@ -11,14 +11,14 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" >Biblioteca</a>
+            <a class="navbar-brand" >Oficina</a>
 
             @auth
             <a href="{{route('logout')}}"> Sair </a>
             @endauth
 
             @guest
-                <a href="{{route('user.log')}}"> Entrar </a>
+                <a href="{{route('log')}}"> Entrar </a>
             @endguest
         </div>
     </nav>

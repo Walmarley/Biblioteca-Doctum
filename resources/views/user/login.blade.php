@@ -1,5 +1,5 @@
 <x-layout title="Logar">
-    <form method="POST" action="{{  route('user.login') }}" class="mt-2">
+    <form method="POST" action="{{  route('login') }}" class="mt-2">
         
         @csrf
         <div class="form-group">
@@ -16,12 +16,8 @@
             <button type="submit" class="btn btn-primary mt-2"> Logar </button>
         </div>
 
-        <a href="{{  route('user.layout') }}" class="btn btn-secondary mt-3">
+        {{-- <a href="{{  route('user.layout') }}" class="btn btn-secondary mt-3"> --}}
             Criar User
-        </a>
-
-        <a href="{{  route('book.index') }}" class="btn btn-secondary mt-3">
-            Dar uma olhadinha
         </a>
 
     </form>

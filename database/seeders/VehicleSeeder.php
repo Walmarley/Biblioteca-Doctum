@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vehicle;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class LibrarySeeder extends Seeder
+class VehicleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,6 @@ class LibrarySeeder extends Seeder
      */
     public function run()
     {
-        //
+        Vehicle::factory(30)->create();
     }
 }

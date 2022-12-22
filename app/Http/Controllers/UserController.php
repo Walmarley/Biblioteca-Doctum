@@ -13,12 +13,20 @@ class UserController extends Controller
 
     public function index()
     {
-        if (!Auth::check()){
-            throw new AuthenticationException();
-        }
         $users = User::all();
 
         return response()->json(['data'=>$users]);
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'usuario inexistente'], 400);
+        }
+
+        return response()->json(['success' => true, 'messages' => $user], 200);
     }
 
     public function layout()
@@ -36,48 +44,49 @@ class UserController extends Controller
 
         $validador = Validator::make($data, [
             'name' => 'required|max:50',
-            'email' => 'required|email',
-            'password' => 'required|string'
+            'email' => 'required|email|unique:users,email',
+            'password'=>'required',
         ]);
 
         if($validador->fails()){
             return response()->json(['message' => $validador->messages()]);
         }
-        
+
         $data ['password'] = bcrypt($data['password']);
         User::create($data);
 
-        return redirect(route('user.log'));
+        // return redirect(route('user.log'));
 
         return response()->json(['message'=> 'Usuario  '. $request->nome.' adicionado com sucesso']);
     }
 
-    public function login()
+    public function update(Request $request, $id)
     {
-        return view('user.login');
-    }
+        $validador = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
+        ]);
 
-    public function Authenticate(Request $request)
-    {
-        $login = $request->only('email', 'password');
-        Auth::attempt($login);
-
-        // Auth::attempt(['email' => $request->email, 'password' => $request->password]); // testando formas diferentes
-
-       if (!$user = Auth::user($login)){
-            return redirect()->back()->withErrors(['Úsuario ou senha inválidos']);
+        if($validador->fails()){
+            return response()->json(['message' => $validador->messages()]);
+            // return view('book.store')->with('mensagem', $validador->messages());
         }
-        
-        return redirect(route('book.index'));
 
-        return response()->json(['Messege' => 'Usuario ' .$user->name. ' logado com sucesso']);
+        User::find($id)->update($request->all());
+        return response()->json(['message'=> 'O Usuario '. $request->name.' Editado com sucesso']);
+        // return view('book.index');
+
     }
 
-    public function logout()
+    public function destroy()
     {
-        Auth::logout();
+        $user = Auth::user();
 
-        return to_route('user.log');
+        User::find(Auth::id())->delete();
+
+        return response()->json(['message' => 'Usuario ' .$user->name. ' Excluido com sucesso']);
     }
 
 

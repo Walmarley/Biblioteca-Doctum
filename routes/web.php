@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\MaintenanceScheduledController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
 
@@ -17,21 +19,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/series');
+    return redirect('/');
 })->middleware(Autenticador::class);
 
-Route::get('/login', [UserController::class,'login'])->name('user.log');
-Route::post('/login', [UserController::class,'Authenticate'])->name('user.login');
+Route::get('/login', [AuthController::class,'log'])->name('log');
+Route::post('/login', [AuthController::class,'login'])->name('login');
+Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
-Route::get('/logout', [UserController::class,'logout'])->name('logout');
 
 
-Route::get('/newuser', [UserController::class,'layout'])->name('user.layout');
-Route::post('/newuser', [UserController::class,'store'])->name('user.store');
+Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
 
-Route::get('/layout', [BookController::class, 'layout'])->name('book.layout');
-Route::post('/layout', [BookController::class, 'store'])->name('book.store');
+Route::get('/addvehicles', [VehicleController::class, 'routeAddVehicle'])->name('addvehicle');
+Route::post('/vehiclestore', [VehicleController::class, 'store'])->name('vehicleStore');
 
-Route::get('/livros', [BookController::class, 'index'])->name('book.index');
-Route::get('/show/{id}', [BookController::class, 'show'])->name('book.show');
-Route::delete('/excluir/{id}', [BookController::class, 'destroy'])->name('book.destroy');
+// Route::get('/show/{id}', [BookController::class, 'show'])->name('book.show');
+Route::delete('/excluirveiculo/{id}', [VehicleController::class, 'destroy'])->name('veiculo.destroy');
+
+Route::get('/listamanutecao/{id}', [MaintenanceController::class, 'index'])->name('manutencao.index');
+
+Route::get('/addvehicles/{id}', [MaintenanceController::class, 'routeAddMaintenance'])->name('addMaintenance');
+Route::post('/vehiclestore/{id}', [MaintenanceController::class, 'store'])->name('maintenanceStore');
+Route::delete('/excluirmanutencao/{id}', [MaintenanceController::class, 'destroy'])->name('manutencao.destroy');
+
+Route::get('/agenda', [MaintenanceScheduledController::class, 'schedulingUser']);
