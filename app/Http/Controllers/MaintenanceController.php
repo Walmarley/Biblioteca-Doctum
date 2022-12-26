@@ -18,13 +18,14 @@ class MaintenanceController extends Controller
     public function index($vehicleId)
     {
         if (Auth::id() != Vehicle::find($vehicleId)->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         $manutencoes = Maintenance::where('vehicle_id', $vehicleId)->get();
 
-        return view('manutencao.listMaintenance', ['maintenances'=> $manutencoes, 'vehicle_id'=>$vehicleId]);
-
+        return view('manutencao.listMaintenance', ['vehicle_id'=>$vehicleId, 'maintenances'=>$manutencoes]);
+        // return view('manutencao.listMaintenance')->with('vehicle_id', $vehicleId);
+        
         return response()->json(['data' => $manutencoes]);
     }
 
@@ -42,7 +43,7 @@ class MaintenanceController extends Controller
     public function store(Request $request, $vehicleId)
     {
         if (Auth::id() != Vehicle::find($vehicleId)->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         $veiculo = Vehicle::find($vehicleId);
@@ -84,12 +85,17 @@ class MaintenanceController extends Controller
         $veiculo = Vehicle::find($manutencao->vehicle_id);
 
         if (Auth::id() != $veiculo->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         return response()->json(['message' => $manutencao]);
     }
 
+
+    public function routeEditMaintenance($vehicleId)
+    {
+        return view('manutencao.editMaintenance', ['vehicle_id' => $vehicleId]);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -103,7 +109,7 @@ class MaintenanceController extends Controller
         $veiculo = Vehicle::find($manutencao->vehicle_id);
 
         if (Auth::id() != $veiculo->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         $data = $request->only([
@@ -124,6 +130,8 @@ class MaintenanceController extends Controller
 
         Maintenance::find($id)->update($data);
 
+        return redirect(route('vehicles.index'));
+
         return response()->json(['message' => 'A manutenção alterada para '
             .$request->scheduling. ' aguardamos voce']);
     }
@@ -140,7 +148,7 @@ class MaintenanceController extends Controller
         $veiculo = Vehicle::find($manutencao->vehicle_id);
 
         if (Auth::id() != $veiculo->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
         
         Maintenance::find($id)->delete();

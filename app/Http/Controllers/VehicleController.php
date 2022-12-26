@@ -76,12 +76,17 @@ class VehicleController extends Controller
     public function show($id)
     {
         if (Auth::id() != Vehicle::find($id)->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         $vehicle = Vehicle::find($id);
 
         return response()->json(['data'=> $vehicle]);
+    }
+
+    public function routeEditVehicle()
+    {
+        return view('vehicles.editVehicle');
     }
 
     /**
@@ -127,7 +132,7 @@ class VehicleController extends Controller
     public function destroy($id)
     {
         if (Auth::id() != Vehicle::find($id)->user_id){
-            return response()->json(['message' => 'Usuario Não autorisado'], 401);
+            return response()->json(['message' => 'Usuario Não autorizado'], 401);
         }
 
         Vehicle::find($id)->delete();

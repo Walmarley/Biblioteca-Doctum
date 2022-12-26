@@ -21,7 +21,7 @@
             <button type="submit" class="btn btn-primary mt-2"> Cadastrar </button>
         </div>
 
-        <a href="{{  route('user.log') }}" class="btn btn-secondary mt-3">
+        <a href="{{  route('log') }}" class="btn btn-secondary mt-3">
             Voltar
         </a>
 

@@ -16,7 +16,7 @@
             <button type="submit" class="btn btn-primary mt-2"> Logar </button>
         </div>
 
-        {{-- <a href="{{  route('user.layout') }}" class="btn btn-secondary mt-3"> --}}
+        <a href="{{  route('adduser') }}" class="btn btn-secondary mt-3">
             Criar User
         </a>
 

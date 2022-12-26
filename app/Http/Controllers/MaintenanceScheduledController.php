@@ -25,7 +25,7 @@ class MaintenanceScheduledController extends Controller
     {
         $user = Auth::user();
 
-        $veiculo = Vehicle::where('user_id', $user->id)
+        $maintenanceScheduleds = Vehicle::where('user_id', $user->id)
             ->join('maintenances', 'maintenances.vehicle_id', 'vehicles.id')
             ->select('vehicles.mark', 'vehicles.model', 'maintenances.maintenance', 'maintenances.description', 'maintenances.scheduling', 'vehicles.plate')
             ->whereBetween('maintenances.scheduling',[
@@ -33,6 +33,8 @@ class MaintenanceScheduledController extends Controller
             ])
             ->get();
 
-        return response()->json(['date' => $veiculo]);
+        return view('manutecaoAgendada.listMaintenanceScheduling')->with('maintenanceScheduleds', $maintenanceScheduleds);
+
+        return response()->json(['date' => $maintenanceScheduleds]);
     }
 }

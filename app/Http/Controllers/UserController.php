@@ -55,7 +55,7 @@ class UserController extends Controller
         $data ['password'] = bcrypt($data['password']);
         User::create($data);
 
-        // return redirect(route('user.log'));
+        return redirect(route('log'));
 
         return response()->json(['message'=> 'Usuario  '. $request->nome.' adicionado com sucesso']);
     }
